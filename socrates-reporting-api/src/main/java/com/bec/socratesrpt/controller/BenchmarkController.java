@@ -67,7 +67,7 @@ public class BenchmarkController {
 			if (schoolList.size() > Constants.ZERO) {
 				restResponseVO.setValue(schoolList);
 			} else {
-				restResponseVO.setStatusDescription("Required school list not available...!");
+				restResponseVO.setStatusDescription("Required school list not available....!");
 			}
 			restResponseVO.setStatusCode(200);//status code have move to constants
 			restResponseVO.setSessionKey(sessionKey);
