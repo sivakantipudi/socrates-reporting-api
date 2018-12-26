@@ -123,7 +123,7 @@ public class BenchmarkController {
 	@RequestMapping(value = "/getStudentList", method = RequestMethod.GET)
 	public RestResponseVO getStudentList(@RequestParam Integer userId, @RequestParam String sessionKey, @RequestParam String role, @RequestParam String schoolId, @RequestParam String classId) {
 
-		long startTime = logger.logPMTBegin("Get student list begins :", true);
+		long startTime = logger.logPMTBegin("Get student list begin :", true);
 
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
