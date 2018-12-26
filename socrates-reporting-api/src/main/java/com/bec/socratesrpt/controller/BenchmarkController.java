@@ -25,10 +25,10 @@
  */
 package com.bec.socratesrpt.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,8 +56,8 @@ public class BenchmarkController {
 	 * @param  userId, sessionKey, role
 	 * @return JSON
 	 */
-	@RequestMapping(value = "/getSchoolList", method = RequestMethod.GET)
-	public RestResponseVO getSchoolList(@RequestParam Integer userId, @RequestParam String sessionKey, @RequestParam String role) {
+	@RequestMapping(value = "/getSchoolList/{userId}", method = RequestMethod.GET)
+	public RestResponseVO getSchoolList(@PathVariable Integer userId, @RequestParam String sessionKey, @RequestParam String role) {
 		
 		long startTime = logger.logPMTBegin("Get school list begin :", true);
 		RestResponseVO restResponseVO = new RestResponseVO();

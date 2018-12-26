@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.bec.socratesrpt.core.exception.BenchmarkException;
@@ -46,6 +47,7 @@ public class StudentSelectorService implements IStudentSelectorService{
 	ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public List<School> getSchoolListByUserId(Integer userId, String sessionKey, String role){
 		
 		List<School> schoolList = null;
