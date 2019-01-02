@@ -26,10 +26,13 @@
 package com.bec.socratesrpt.iservice;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bec.socratesrpt.rest.model.ClassList;
+import com.bec.socratesrpt.rest.model.RestRequestVO;
 import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
+import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
 
 public interface IStudentSelectorService {
 
@@ -64,5 +67,9 @@ public interface IStudentSelectorService {
 	 * @return
 	 */
 	List<Student> getStudentListByClassId(Integer userId, String sessionKey, String role, String schoolId, String classId);
+
+	Map<String, List<Object>> getTestScoresByClass();
+
+	List<StudentTestScoreDetails> getTestScoreByStudent(RestRequestVO requestVO);
 
 }

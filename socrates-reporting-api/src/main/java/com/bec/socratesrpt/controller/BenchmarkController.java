@@ -26,9 +26,11 @@
 package com.bec.socratesrpt.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,9 +40,11 @@ import com.bec.socratesrpt.core.common.Constants;
 import com.bec.socratesrpt.core.logger.Log;
 import com.bec.socratesrpt.iservice.IStudentSelectorService;
 import com.bec.socratesrpt.rest.model.ClassList;
+import com.bec.socratesrpt.rest.model.RestRequestVO;
 import com.bec.socratesrpt.rest.model.RestResponseVO;
 import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
+import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
 
 @RestController
 @RequestMapping("/api")
@@ -143,6 +147,69 @@ public class BenchmarkController {
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		logger.logPMTEnd("Get student list end :", startTime, true);
+		return restResponseVO;
+	}
+	
+	@RequestMapping(value = "/getTestScoreByStudent", method = RequestMethod.POST)
+	public RestResponseVO getTestScoreByStudent(@RequestBody RestRequestVO requestVO) throws Exception {
+		
+		RestResponseVO restResponseVO = new RestResponseVO();
+		try {
+			List<StudentTestScoreDetails> studentTestScoreList = studentService.getTestScoreByStudent(requestVO);
+			if (studentTestScoreList.size() > Constants.ZERO) {
+				restResponseVO.setValue(studentTestScoreList);
+			} else {
+				restResponseVO.setStatusDescription("Required student list not available...!");
+			}
+			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
+		} catch (Exception e) {
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
+			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusDescription(e.getMessage());
+		}
+		return restResponseVO;
+	}
+	
+	@RequestMapping(value = "/getTestScoreByClass", method = RequestMethod.POST)
+	public RestResponseVO getTestScoreByClass(@RequestBody RestRequestVO requestVO) throws Exception {
+		
+		RestResponseVO restResponseVO = new RestResponseVO();
+		try {
+			List<StudentTestScoreDetails> studentTestScoreList = studentService.getTestScoreByStudent(requestVO);
+			if (studentTestScoreList.size() > Constants.ZERO) {
+				restResponseVO.setValue(studentTestScoreList);
+			} else {
+				restResponseVO.setStatusDescription("Required student list not available...!");
+			}
+			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
+		} catch (Exception e) {
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
+			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusDescription(e.getMessage());
+		}
+		return restResponseVO;
+	}
+	
+	@RequestMapping(value = "/getTestScoresByClass", method = RequestMethod.GET)
+	public RestResponseVO getTestScoresByClass() {
+		RestResponseVO restResponseVO = new RestResponseVO();
+		try {
+			Map<String, List<Object>> testNameByStudentTestDetails = studentService.getTestScoresByClass();
+
+			if (testNameByStudentTestDetails.size() > Constants.ZERO) {
+				restResponseVO.setValue(testNameByStudentTestDetails);
+			} else {
+				restResponseVO.setStatusDescription("Required student list not available...!");
+			}
+			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
+		}catch (Exception e) {
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
+			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusDescription(e.getMessage());
+		}
 		return restResponseVO;
 	}
 }
