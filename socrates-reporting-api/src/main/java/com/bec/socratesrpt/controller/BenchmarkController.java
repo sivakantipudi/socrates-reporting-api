@@ -74,8 +74,8 @@ public class BenchmarkController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-	@RequestMapping(value = "/getSchoolList/{userId}", method = RequestMethod.GET)
-	public RestResponseVO getSchoolList(@PathVariable Integer userId, @RequestParam String sessionKey, @RequestParam String role) {
+	@RequestMapping(value = "/getSchoolList", method = RequestMethod.GET)
+	public RestResponseVO getSchoolList(@RequestParam Integer userId, @RequestParam String sessionKey, @RequestParam String role) {
 		
 		long startTime = logger.logPMTBegin("Get school list begin :", true);
 		RestResponseVO restResponseVO = new RestResponseVO();
@@ -85,7 +85,7 @@ public class BenchmarkController {
 			if (schoolList.size() > Constants.ZERO) {
 				restResponseVO.setValue(schoolList);
 			} else {
-				restResponseVO.setStatusDescription("Required school list not available....!");
+				restResponseVO.setStatusDescription("Required school list not available...!");
 			}
 			restResponseVO.setStatusCode(200);//status code have move to constants
 			restResponseVO.setSessionKey(sessionKey);

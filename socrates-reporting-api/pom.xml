@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.1.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bec.socratesrpt</groupId>
 	<artifactId>socrates-reporting-api</artifactId>
@@ -20,65 +21,73 @@
 		<docker.image.prefix>springio</docker.image.prefix>
 	</properties>
 
+	<!-- Redshift connection -->
+	<repositories>
+		<repository>
+			<id>redshift</id>
+			<url>http://redshift-maven-repository.s3-website-us-east-1.amazonaws.com/release</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
-	    
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-	
-		
+
+
 		<dependency>
-	        <groupId>org.codehaus.jackson</groupId>
-	        <artifactId>jackson-mapper-asl</artifactId>
-	        <version>1.9.13</version>
-	    </dependency>
-	    
-	    <dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
+		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
-		
+
 		<dependency>
-           <groupId>org.slf4j</groupId>
-           <artifactId>jul-to-slf4j</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-        </dependency>
-		
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+		</dependency>
+
 		<dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.6</version>
-       </dependency>
-       
-       <!-- https://mvnrepository.com/artifact/org.json/json -->
-       <dependency>
-           <groupId>org.json</groupId>
-           <artifactId>json</artifactId>
-           <version>20180813</version>
-       </dependency>
-       
-       <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-       <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-databind</artifactId>
-       </dependency>
-       
-       <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		
-		
+
 		<!-- JUnit 4 dependency -->
 
 		<dependency>
@@ -108,10 +117,29 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<scope>test</scope>
 		</dependency>
-		
-		
+		<!-- Redshift JDBC driver dependency -->
+		<dependency>
+			<groupId>com.amazon.redshift</groupId>
+			<artifactId>redshift-jdbc42</artifactId>
+			<version>1.2.10.1009</version>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-redshift</artifactId>
+			<version>1.11.118</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+
 		<!-- Swagger dependencies for documentation -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -129,49 +157,47 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			</dependency>
-		
-   </dependencies>
-   
-<build>
-	<plugins>
-		<plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-		</plugin>
-		
-		<plugin>
-            		<groupId>com.spotify</groupId>
-            		<artifactId>dockerfile-maven-plugin</artifactId>
-            		<version>1.4.9</version>
-            		<configuration>
-                		<repository>${docker.image.prefix}/${project.artifactId}</repository>
-            		</configuration>
-        </plugin>
-		<plugin>
-    			<groupId>org.apache.maven.plugins</groupId>
-    			<artifactId>maven-dependency-plugin</artifactId>
-    			<executions>
-        			<execution>
-            				<id>unpack</id>
-            				<phase>package</phase>
-            				<goals>
-                				<goal>unpack</goal>
-            				</goals>
-            				<configuration>
-                				<artifactItems>
-                    					<artifactItem>
-                        					<groupId>${project.groupId}</groupId>
-					                        <artifactId>${project.artifactId}</artifactId>
-					                        <version>${project.version}</version>
-				                </artifactItem>
-			        	        </artifactItems>
-				        </configuration>
-			        </execution>
-  		    </executions>
-		</plugin>
-		
-		<plugin>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.9</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Spring Boot configures surefire by default, but not failsafe -->
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 			</plugin>
@@ -187,7 +213,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-	</plugins>
-</build>
+		</plugins>
+	</build>
 
 </project>
