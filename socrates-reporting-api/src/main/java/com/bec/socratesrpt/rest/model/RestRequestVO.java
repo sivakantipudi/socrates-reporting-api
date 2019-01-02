@@ -8,6 +8,8 @@ public class RestRequestVO {
 	private String districtId;
 	private String jwtToken;
 	private String userId;
+	private String districtTerm;
+	
 	
 	/**
 	 * @return the studentId
@@ -81,5 +83,19 @@ public class RestRequestVO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	/**
+	 * @return the districtTerm
+	 */
+	public String getDistrictTerm() {
+		return districtTerm;
+	}
+	/**
+	 * @param districtTerm the districtTerm to set
+	 */
+	public void setDistrictTerm(String districtTerm) {
+		this.districtTerm = districtTerm;
+	}
+	
+	
 	
 }

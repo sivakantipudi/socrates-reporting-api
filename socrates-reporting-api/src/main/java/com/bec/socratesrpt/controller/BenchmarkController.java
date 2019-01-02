@@ -45,6 +45,12 @@ import com.bec.socratesrpt.rest.model.RestResponseVO;
 import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
 import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
+import com.bec.socratesrpt.rest.model.TestsModel;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api")
@@ -60,6 +66,14 @@ public class BenchmarkController {
 	 * @param  userId, sessionKey, role
 	 * @return JSON
 	 */
+	@ApiOperation(value = "View a list of schools permitted for logged in user",response = RestResponseVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved  school list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@RequestMapping(value = "/getSchoolList/{userId}", method = RequestMethod.GET)
 	public RestResponseVO getSchoolList(@PathVariable Integer userId, @RequestParam String sessionKey, @RequestParam String role) {
 		
@@ -90,7 +104,14 @@ public class BenchmarkController {
 	 * @param  userId, sessionKey, role, schoolId
 	 * @return JSON
 	 */
-
+	@ApiOperation(value = "View a list of classes permitted for selected school",response = RestResponseVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved  class list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@RequestMapping(value = "/getClassList", method = RequestMethod.GET)
 	public RestResponseVO getClassList(@RequestParam Integer userId, @RequestParam String sessionKey, @RequestParam String role, @RequestParam String schoolId) {
 
@@ -123,7 +144,14 @@ public class BenchmarkController {
 	 * @param  userId, sessionKey, role, schoolId, classId
 	 * @return JSON
 	 */
-
+	@ApiOperation(value = "View a list of students for the school selected",response = RestResponseVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved  students list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@RequestMapping(value = "/getStudentList", method = RequestMethod.GET)
 	public RestResponseVO getStudentList(@RequestParam Integer userId, @RequestParam String sessionKey, @RequestParam String role, @RequestParam String schoolId, @RequestParam String classId) {
 
@@ -150,6 +178,15 @@ public class BenchmarkController {
 		return restResponseVO;
 	}
 	
+	
+	@ApiOperation(value = "gets test score for a student",response = RestResponseVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved  test score"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@RequestMapping(value = "/getTestScoreByStudent", method = RequestMethod.POST)
 	public RestResponseVO getTestScoreByStudent(@RequestBody RestRequestVO requestVO) throws Exception {
 		
@@ -159,7 +196,7 @@ public class BenchmarkController {
 			if (studentTestScoreList.size() > Constants.ZERO) {
 				restResponseVO.setValue(studentTestScoreList);
 			} else {
-				restResponseVO.setStatusDescription("Required student list not available...!");
+				restResponseVO.setStatusDescription("Required test score not available...!");
 			}
 			restResponseVO.setStatusCode(200);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
@@ -171,6 +208,15 @@ public class BenchmarkController {
 		return restResponseVO;
 	}
 	
+	
+	@ApiOperation(value = "gets test score for a class average",response = RestResponseVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved  test score for a class"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@RequestMapping(value = "/getTestScoreByClass", method = RequestMethod.POST)
 	public RestResponseVO getTestScoreByClass(@RequestBody RestRequestVO requestVO) throws Exception {
 		
@@ -180,7 +226,7 @@ public class BenchmarkController {
 			if (studentTestScoreList.size() > Constants.ZERO) {
 				restResponseVO.setValue(studentTestScoreList);
 			} else {
-				restResponseVO.setStatusDescription("Required student list not available...!");
+				restResponseVO.setStatusDescription("Required testscore not available...!");
 			}
 			restResponseVO.setStatusCode(200);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
@@ -191,18 +237,32 @@ public class BenchmarkController {
 		}
 		return restResponseVO;
 	}
+
 	
-	@RequestMapping(value = "/getTestScoresByClass", method = RequestMethod.GET)
-	public RestResponseVO getTestScoresByClass() {
+	@ApiOperation(value = "fetch tests list for context is for a single class or student, the total number of tests listed will only be the universe of tests for which test data is available in the District Term selected.",response = RestResponseVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved  test score"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+	@RequestMapping(value = "/getTestsForUniverse", method = RequestMethod.GET)
+	public RestResponseVO getTestsList(@RequestBody RestRequestVO requestObject) {
+		
+
+		long startTime = logger.logPMTBegin("Get test list begin :", true);
+
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
-			Map<String, List<Object>> testNameByStudentTestDetails = studentService.getTestScoresByClass();
+			List<TestsModel> testsList = studentService.getTestsForUniverse(requestObject);
 
-			if (testNameByStudentTestDetails.size() > Constants.ZERO) {
-				restResponseVO.setValue(testNameByStudentTestDetails);
+			if (testsList.size() > Constants.ZERO) {
+				restResponseVO.setValue(testsList);
 			} else {
-				restResponseVO.setStatusDescription("Required student list not available...!");
+				restResponseVO.setStatusDescription("Required test list not available...!");
 			}
+			restResponseVO.setSessionKey("1234");
 			restResponseVO.setStatusCode(200);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		}catch (Exception e) {
@@ -210,6 +270,7 @@ public class BenchmarkController {
 			restResponseVO.setStatusCode(400);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
+		logger.logPMTEnd("Get test list end :", startTime, true);
 		return restResponseVO;
 	}
 }

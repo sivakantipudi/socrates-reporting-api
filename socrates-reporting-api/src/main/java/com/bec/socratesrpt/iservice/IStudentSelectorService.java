@@ -33,6 +33,7 @@ import com.bec.socratesrpt.rest.model.RestRequestVO;
 import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
 import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
+import com.bec.socratesrpt.rest.model.TestsModel;
 
 public interface IStudentSelectorService {
 
@@ -68,8 +69,13 @@ public interface IStudentSelectorService {
 	 */
 	List<Student> getStudentListByClassId(Integer userId, String sessionKey, String role, String schoolId, String classId);
 
-	Map<String, List<Object>> getTestScoresByClass();
-
 	List<StudentTestScoreDetails> getTestScoreByStudent(RestRequestVO requestVO);
+	
+	/**
+	 * fetches tests list if context is for a single class or student, the total number of tests listed will only be the universe of tests for which test data is available in the District Term selected.
+	 * @param Object The request object
+	 * @return
+	 */
+	List<TestsModel> getTestsForUniverse(RestRequestVO requestObj);
 
 }

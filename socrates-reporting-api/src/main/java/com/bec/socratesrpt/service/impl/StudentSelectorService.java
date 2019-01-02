@@ -44,6 +44,7 @@ import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
 import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
 import com.bec.socratesrpt.rest.model.TestDetails;
+import com.bec.socratesrpt.rest.model.TestsModel;
 
 @Service
 public class StudentSelectorService implements IStudentSelectorService{
@@ -128,61 +129,53 @@ public class StudentSelectorService implements IStudentSelectorService{
 		return studentTestScoreList;
 	}
 	
+
 	@Override
-	public Map<String,List<Object>> getTestScoresByClass(){
+	public List<TestsModel> getTestsForUniverse(RestRequestVO requestObj) {
+		List<TestsModel> testsList = null;
+		String testsJSON = "[{" + 
+				"\"testName\":\"Interim1\"," + 
+				"\"testResults\":\"30\"," + 
+				"\"testStartDate\":\"02-02-2018\"," + 
+				"\"testEndDate\":\"02-03-2018\"" + 
+				"}," + 
+				"{" + 
+				"\"testName\":\"Unit 1\"," + 
+				"\"testResults\":\"35\"," + 
+				"\"testStartDate\":\"02-04-2018\", " + 
+				"\"testEndDate\":\"02-05-2018\"" + 
+				"}," + 
+				"{" + 
+				"\"testName\":\"Unit 1 Week 2\"," + 
+				"\"testResults\":\"40\"," + 
+				"\"testStartDate\":\"02-06-2018\", " + 
+				"\"testEndDate\":\"02-07-2018\"" + 
+				"}," + 
+				"{" + 
+				"\"testName\":\"Unit 2\"," + 
+				"\"testResults\":\"30\"," + 
+				"\"testStartDate\":\"02-08-2018\", " + 
+				"\"testEndDate\":\"02-09-2018\"" + 
+				"}," + 
+				"{" + 
+				"\"testName\":\"Unit 2 Week 2\"," + 
+				"\"testResults\":\"40\"," + 
+				"\"testStartDate\":\"02-10-2018\"," + 
+				"\"testEndDate\":\"02-11-2018\"" + 
+				"}," + 
+				"{" + 
+				"\"testName\":\"Interim2\"," + 
+				"\"testResults\":\"45\"," + 
+				"\"testStartDate\":\"02-12-2018\"," + 
+				"\"testEndDate\":\"02-13-2018\"" + 
+				"}]";
 		
-		Map<String,List<Object>> testNameByStudentTestDetails = new HashMap<String,List<Object>>();
-		List<StudentTestScoreDetails> StudentTestScoreDetailsList = new ArrayList<StudentTestScoreDetails>();
-		
-		List<StudentTestScoreDetails> StudentTestScoreDetailsList1 = new ArrayList<StudentTestScoreDetails>();
-		
-		List<Object> objectList = new ArrayList<Object>();
-		
-		List<Object> objectList1 = new ArrayList<Object>();
-		
-		TestDetails testDetails = new TestDetails();
-		testDetails.setTestName("test1");
-		testDetails.setTotalTestScore("80");
-		
-		TestDetails testDetails1 = new TestDetails();
-		testDetails1.setTestName("test2");
-		testDetails1.setTotalTestScore("70");
-		
-		StudentTestScoreDetails studentTestScoreDetails = new StudentTestScoreDetails();
-		studentTestScoreDetails.setStudentName("sivaram");
-		studentTestScoreDetails.setStudentScore("80");
-		studentTestScoreDetails.setSubmitedDate("3/5/18");
-		
-		StudentTestScoreDetails studentTestScoreDetails1 = new StudentTestScoreDetails();
-		studentTestScoreDetails1.setStudentName("Sandeep");
-		studentTestScoreDetails1.setStudentScore("80");
-		studentTestScoreDetails1.setSubmitedDate("3/5/18");
-		
-		StudentTestScoreDetails studentTestScoreDetails2 = new StudentTestScoreDetails();
-		studentTestScoreDetails2.setStudentName("Dinesh");
-		studentTestScoreDetails2.setStudentScore("70");
-		studentTestScoreDetails2.setSubmitedDate("3/5/18");
-		
-		StudentTestScoreDetails studentTestScoreDetails3 = new StudentTestScoreDetails();
-		studentTestScoreDetails3.setStudentName("Rajesh");
-		studentTestScoreDetails3.setStudentScore("70");
-		studentTestScoreDetails3.setSubmitedDate("3/5/18");
-		
-		StudentTestScoreDetailsList.add(studentTestScoreDetails);
-		StudentTestScoreDetailsList.add(studentTestScoreDetails1);
-		
-		StudentTestScoreDetailsList1.add(studentTestScoreDetails2);
-		StudentTestScoreDetailsList1.add(studentTestScoreDetails3);
-		
-		objectList.add(testDetails);
-		objectList.add(StudentTestScoreDetailsList);
-		
-		objectList1.add(testDetails1);
-		objectList1.add(StudentTestScoreDetailsList1);
-		
-		testNameByStudentTestDetails.put("test1", objectList);
-		testNameByStudentTestDetails.put("test2", objectList1);
-		
-		return testNameByStudentTestDetails;
+		try {
+			testsList = OBJECT_MAPPER.readValue(testsJSON, OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, TestsModel.class));
+		}catch(Exception e) {
+			BenchmarkException.printExceptionTraceToLogFile(e, logger);
+		}
+		return testsList;
 	}
+
 }
