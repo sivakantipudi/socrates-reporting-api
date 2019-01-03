@@ -1,9 +1,10 @@
 /*
- * Copyright Benchmark
+*
+ * Copyright Benchmark Education Company
  *
  * (C) Copyright Benchmark	All rights reserved.
  *
- * NOTICE:  All information contained herein or attendant hereto is,
+ * NOTICE:  All information contained herein or attendant here to is,
  *          and remains, the property of Benchmark.  Many of the
  *          intellectual and technical concepts contained herein are
  *          proprietary to Benchmark. Any dissemination of this
@@ -18,7 +19,7 @@
  * ========================================================================
  * DATE				: PROGRAMMER  : DESCRIPTION
  * ========================================================================
- * DEC 12 2018		: BEC       : CREATED.
+ * DEC 12 2018		: BEC         : CREATED.
  * ------------------------------------------------------------------------
  *
  * ========================================================================
@@ -26,8 +27,6 @@
 package com.bec.socratesrpt.controller;
 
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,9 +44,9 @@ import com.bec.socratesrpt.rest.model.RestResponseVO;
 import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
 import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
+import com.bec.socratesrpt.rest.model.TestScoreDetails;
 import com.bec.socratesrpt.rest.model.TestsModel;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -196,7 +195,7 @@ public class BenchmarkController {
 			if (studentTestScoreList.size() > Constants.ZERO) {
 				restResponseVO.setValue(studentTestScoreList);
 			} else {
-				restResponseVO.setStatusDescription("Required test score not available...!");
+				restResponseVO.setStatusDescription("Required test score details not available...!");
 			}
 			restResponseVO.setStatusCode(200);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
@@ -222,11 +221,69 @@ public class BenchmarkController {
 		
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
-			List<StudentTestScoreDetails> studentTestScoreList = studentService.getTestScoreByStudent(requestVO);
-			if (studentTestScoreList.size() > Constants.ZERO) {
-				restResponseVO.setValue(studentTestScoreList);
+			List<TestScoreDetails> testScoreClassList = studentService.getTestScoreByClass(requestVO);
+			if (testScoreClassList.size() > Constants.ZERO) {
+				restResponseVO.setValue(testScoreClassList);
 			} else {
-				restResponseVO.setStatusDescription("Required testscore not available...!");
+				restResponseVO.setStatusDescription("Required testscore details not available...!");
+			}
+			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
+		} catch (Exception e) {
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
+			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusDescription(e.getMessage());
+		}
+		return restResponseVO;
+	}
+	
+	@ApiOperation(value = "gets test score for a school average",response = RestResponseVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved  test score for a school"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+	@RequestMapping(value = "/getTestScoreBySchool", method = RequestMethod.POST)
+	public RestResponseVO getTestScoreBySchool(@RequestBody RestRequestVO requestVO) throws Exception {
+		
+		RestResponseVO restResponseVO = new RestResponseVO();
+		try {
+			List<TestScoreDetails> testScoreSchoolList = studentService.getTestScoreBySchool(requestVO);
+			if (testScoreSchoolList.size() > Constants.ZERO) {
+				restResponseVO.setValue(testScoreSchoolList);
+			} else {
+				restResponseVO.setStatusDescription("Required testscore details not available...!");
+			}
+			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
+		} catch (Exception e) {
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
+			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusDescription(e.getMessage());
+		}
+		return restResponseVO;
+	}
+	
+	@ApiOperation(value = "gets test score for a district average",response = RestResponseVO.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved  test score for a district"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
+	@RequestMapping(value = "/getTestScoreByDistrict", method = RequestMethod.POST)
+	public RestResponseVO getTestScoreByDistrict(@RequestBody RestRequestVO requestVO) throws Exception {
+		
+		RestResponseVO restResponseVO = new RestResponseVO();
+		try {
+			List<TestScoreDetails> testScoreDistrictList = studentService.getTestScoreByDistrict(requestVO);
+			if (testScoreDistrictList.size() > Constants.ZERO) {
+				restResponseVO.setValue(testScoreDistrictList);
+			} else {
+				restResponseVO.setStatusDescription("Required testscore details not available...!");
 			}
 			restResponseVO.setStatusCode(200);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
@@ -262,7 +319,6 @@ public class BenchmarkController {
 			} else {
 				restResponseVO.setStatusDescription("Required test list not available...!");
 			}
-			restResponseVO.setSessionKey("1234");
 			restResponseVO.setStatusCode(200);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		}catch (Exception e) {

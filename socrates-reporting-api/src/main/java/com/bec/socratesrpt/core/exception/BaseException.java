@@ -1,5 +1,5 @@
 /*
- * Copyright Benchmark
+ * Copyright Benchmark Education Company
  *
  * (C) Copyright Benchmark	All rights reserved.
  *
@@ -26,7 +26,7 @@
 package com.bec.socratesrpt.core.exception;
 
 /**
- *  This class shall serve as the default exception class for the Benchmark Services
+ *  This class shall serve as the default exception class for the socrates reporting API  Services
  *  application. All exceptions caught in application layer should need to be encapsulated 
  *  with this exception.
  *  @author Sivaram

@@ -4,8 +4,20 @@ public class StudentTestScoreDetails {
 
 	private String studentName;
 	private String submitedDate;
-	private String studentScore;
+	private String testScore;
 	
+	/**
+	 * @return the testScore
+	 */
+	public String getTestScore() {
+		return testScore;
+	}
+	/**
+	 * @param testScore the testScore to set
+	 */
+	public void setTestScore(String testScore) {
+		this.testScore = testScore;
+	}
 	private String testName;
 	
 	/**
@@ -32,18 +44,7 @@ public class StudentTestScoreDetails {
 	public void setSubmitedDate(String submitedDate) {
 		this.submitedDate = submitedDate;
 	}
-	/**
-	 * @return the studentScore
-	 */
-	public String getStudentScore() {
-		return studentScore;
-	}
-	/**
-	 * @param studentScore the studentScore to set
-	 */
-	public void setStudentScore(String studentScore) {
-		this.studentScore = studentScore;
-	}
+	
 	/**
 	 * @return the testName
 	 */

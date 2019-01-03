@@ -1,9 +1,9 @@
 /*
- * Copyright Benchmark
+ * Copyright Benchmark Education Company
  *
  * (C) Copyright Benchmark	All rights reserved.
  *
- * NOTICE:  All information contained herein or attendant hereto is,
+ * NOTICE:  All information contained herein or attendant here to is,
  *          and remains, the property of Benchmark.  Many of the
  *          intellectual and technical concepts contained herein are
  *          proprietary to Benchmark. Any dissemination of this
@@ -18,7 +18,7 @@
  * ========================================================================
  * DATE				: PROGRAMMER  : DESCRIPTION
  * ========================================================================
- * DEC 15 2018		: BEC       : CREATED.
+ * DEC 15 2018		: BEC         : CREATED.
  * ------------------------------------------------------------------------
  *
  * ========================================================================
@@ -33,6 +33,7 @@ import com.bec.socratesrpt.rest.model.RestRequestVO;
 import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
 import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
+import com.bec.socratesrpt.rest.model.TestScoreDetails;
 import com.bec.socratesrpt.rest.model.TestsModel;
 
 public interface IStudentSelectorService {
@@ -69,7 +70,33 @@ public interface IStudentSelectorService {
 	 */
 	List<Student> getStudentListByClassId(Integer userId, String sessionKey, String role, String schoolId, String classId);
 
+	/**
+	 * fetches test score list based on student selected
+	 * @param userId logged in user ID
+	 * @return StudentTestScoreDetails
+	 */
 	List<StudentTestScoreDetails> getTestScoreByStudent(RestRequestVO requestVO);
+	
+	/**
+	 * fetches test score list based on class selected
+	 * @param userId logged in user ID
+	 * @return TestScoreDetails
+	 */
+	List<TestScoreDetails> getTestScoreByClass(RestRequestVO requestVO);
+	
+	/**
+	 * fetches test score list based on school selected
+	 * @param userId logged in user ID
+	 * @return TestScoreDetails
+	 */
+	List<TestScoreDetails> getTestScoreBySchool(RestRequestVO requestVO);
+	
+	/**
+	 * fetches test score list based on district selected
+	 * @param userId logged in user ID
+	 * @return TestScoreDetails
+	 */
+	List<TestScoreDetails> getTestScoreByDistrict(RestRequestVO requestVO);
 	
 	/**
 	 * fetches tests list if context is for a single class or student, the total number of tests listed will only be the universe of tests for which test data is available in the District Term selected.
@@ -77,5 +104,7 @@ public interface IStudentSelectorService {
 	 * @return
 	 */
 	List<TestsModel> getTestsForUniverse(RestRequestVO requestObj);
+
+	Map<String, List<Object>> getTestScoresByClass();
 
 }

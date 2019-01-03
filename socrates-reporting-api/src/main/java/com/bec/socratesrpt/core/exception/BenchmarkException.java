@@ -1,5 +1,5 @@
 /*
- * Copyright Benchmark
+ * Copyright Benchmark Education Company
  *
  * (C) Copyright Benchmark	All rights reserved.
  *
