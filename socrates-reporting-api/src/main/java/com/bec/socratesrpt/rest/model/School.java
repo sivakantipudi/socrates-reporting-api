@@ -1,9 +1,9 @@
 /*
- * Copyright Benchmark
+ * Copyright Benchmark Education Company
  *
  * (C) Copyright Benchmark	All rights reserved.
  *
- * NOTICE:  All information contained herein or attendant hereto is,
+ * NOTICE:  All information contained herein or attendant here to is,
  *          and remains, the property of Benchmark.  Many of the
  *          intellectual and technical concepts contained herein are
  *          proprietary to Benchmark. Any dissemination of this
