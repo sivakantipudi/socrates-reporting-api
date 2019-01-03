@@ -54,7 +54,7 @@ public class StudentSelectorService implements IStudentSelectorService{
 	ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	@Override
-	//@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public List<School> getSchoolListByUserId(Integer userId, String sessionKey, String role){
 		
 		List<School> schoolList = null;
@@ -175,6 +175,7 @@ public class StudentSelectorService implements IStudentSelectorService{
 		}catch(Exception e) {
 			BenchmarkException.printExceptionTraceToLogFile(e, logger);
 		}
+
 		return testsList;
 	}
 
