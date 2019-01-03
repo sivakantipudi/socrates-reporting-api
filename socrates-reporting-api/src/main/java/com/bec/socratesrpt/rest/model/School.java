@@ -27,8 +27,8 @@ package com.bec.socratesrpt.rest.model;
 
 public class School {
 
-	private String id;
 	private String name;
+	private String id;
 	private String address;
 	
 	/**
