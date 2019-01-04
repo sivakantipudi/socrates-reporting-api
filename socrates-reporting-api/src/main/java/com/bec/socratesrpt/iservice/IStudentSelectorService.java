@@ -26,13 +26,12 @@
 package com.bec.socratesrpt.iservice;
 
 import java.util.List;
-import java.util.Map;
-
 import com.bec.socratesrpt.rest.model.ClassList;
 import com.bec.socratesrpt.rest.model.RestRequestVO;
 import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
 import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
+import com.bec.socratesrpt.rest.model.TestDetails;
 import com.bec.socratesrpt.rest.model.TestScoreDetails;
 import com.bec.socratesrpt.rest.model.TestsModel;
 
@@ -99,12 +98,25 @@ public interface IStudentSelectorService {
 	List<TestScoreDetails> getTestScoreByDistrict(RestRequestVO requestVO);
 	
 	/**
-	 * fetches tests list if context is for a single class or student, the total number of tests listed will only be the universe of tests for which test data is available in the District Term selected.
+	 * fetches tests list if context is for a single class or student, the total number 
+	 * of tests listed will only be the universe of tests for which test data is available in the District Term selected.
 	 * @param Object The request object
 	 * @return
 	 */
 	List<TestsModel> getTestsForUniverse(RestRequestVO requestObj);
 
-	Map<String, List<Object>> getTestScoresByClass();
+	/**
+	 * fetches over time test scores details 
+	 * @param userId logged in user ID
+	 * @return TestDetails
+	 */
+	List<TestDetails> getOverTimeTestScores(RestRequestVO requestVO);
+
+	/**
+	 * fetches student score details by test 
+	 * @param userId logged in user ID
+	 * @return StudentTestScoreDetails
+	 */
+	List<StudentTestScoreDetails> getStudentScoreDetailsByTest(RestRequestVO requestVO);
 
 }

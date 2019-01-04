@@ -28,7 +28,7 @@ package com.bec.socratesrpt.rest.model;
 public class TestDetails {
 
 	private String testName;
-	private String totalTestScore;
+	private String testScore;
 	
 	/**
 	 * @return the testName
@@ -46,12 +46,12 @@ public class TestDetails {
 	 * @return the totalTestScore
 	 */
 	public String getTotalTestScore() {
-		return totalTestScore;
+		return testScore;
 	}
 	/**
 	 * @param totalTestScore the totalTestScore to set
 	 */
 	public void setTotalTestScore(String totalTestScore) {
-		this.totalTestScore = totalTestScore;
+		this.testScore = totalTestScore;
 	}
 }

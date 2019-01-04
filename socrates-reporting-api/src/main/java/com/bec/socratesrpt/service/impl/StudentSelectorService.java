@@ -26,11 +26,8 @@
 package com.bec.socratesrpt.service.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -602,60 +599,179 @@ public class StudentSelectorService implements IStudentSelectorService{
 		return testScoresDistrictList;
 	}
 	
+	@Override
+	public List<TestDetails> getOverTimeTestScores(RestRequestVO requestVO){
+		List<TestDetails> overTimeClassTestScoreList = new LinkedList<TestDetails>();
+
+		String overTimeClassTestScoresJSON = 
+
+				"[" + 
+						"{" + 
+						"\"testName\":\"interim1\"," + 
+						"\"testScore\":\"35\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit1\"," + 
+						"\"testScore\":\"45\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 1 week 2\"," + 
+						"\"testScore\":\"40\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 1 week 3\"," + 
+						"\"testScore\":\"40\"," + 
+						"}," + 
+						"" + 
+						"{" + 
+						"\"testName\":\"unit 2\"," + 
+						"\"testScore\":\"50\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 2 week 1\"," + 
+						"\"testScore\":\"55\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 2 week 2\"," + 
+						"\"testScore\":\"50\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"interim 2\"," + 
+						"\"testScore\":\"65\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 3\"," + 
+						"\"testScore\":\"70\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 3 week 1\"," + 
+						"\"testScore\":\"80\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 3 week 2\"," + 
+						"\"testScore\":\"58\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 3 week 3\"," + 
+						"\"testScore\":\"52\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 4\"," + 
+						"\"testScore\":\"40\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 4 week 1\"," + 
+						"\"testScore\":\"40\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 4 week 2\"," + 
+						"\"testScore\":\"50\"," + 
+						"}," + 
+						"{" + 
+						"\"testName\":\"unit 4 week 3\"," + 
+						"\"testScore\":\"55\"," + 
+						"}" + 
+						"]";
+
+		try {
+			overTimeClassTestScoreList = OBJECT_MAPPER.readValue(overTimeClassTestScoresJSON, OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, TestDetails.class));
+		}catch(Exception e) {
+			BenchmarkException.printExceptionTraceToLogFile(e, logger);
+		}
+
+		return overTimeClassTestScoreList;
+	}
 	
 	@Override
-	public Map<String,List<Object>> getTestScoresByClass(){
-
-		Map<String,List<Object>> testNameByStudentTestDetails = new HashMap<String,List<Object>>();
-		List<StudentTestScoreDetails> StudentTestScoreDetailsList = new ArrayList<StudentTestScoreDetails>();
-
-		List<StudentTestScoreDetails> StudentTestScoreDetailsList1 = new ArrayList<StudentTestScoreDetails>();
-
-		List<Object> objectList = new ArrayList<Object>();
-
-		List<Object> objectList1 = new ArrayList<Object>();
-
-		TestDetails testDetails = new TestDetails();
-		testDetails.setTestName("test1");
-		testDetails.setTotalTestScore("80");
-
-		TestDetails testDetails1 = new TestDetails();
-		testDetails1.setTestName("test2");
-		testDetails1.setTotalTestScore("70");
-
-		StudentTestScoreDetails studentTestScoreDetails = new StudentTestScoreDetails();
-		studentTestScoreDetails.setStudentName("sivaram");
-		studentTestScoreDetails.setTestScore("80");
-		studentTestScoreDetails.setSubmitedDate("3/5/18");
-
-		StudentTestScoreDetails studentTestScoreDetails1 = new StudentTestScoreDetails();
-		studentTestScoreDetails1.setStudentName("Sandeep");
-		studentTestScoreDetails1.setTestScore("80");
-		studentTestScoreDetails1.setSubmitedDate("3/5/18");
-
-		StudentTestScoreDetails studentTestScoreDetails2 = new StudentTestScoreDetails();
-		studentTestScoreDetails2.setStudentName("Dinesh");
-		studentTestScoreDetails2.setTestScore("70");
-		studentTestScoreDetails2.setSubmitedDate("3/5/18");
-
-		StudentTestScoreDetails studentTestScoreDetails3 = new StudentTestScoreDetails();
-		studentTestScoreDetails3.setStudentName("Rajesh");
-		studentTestScoreDetails3.setTestScore("70");
-		studentTestScoreDetails3.setSubmitedDate("3/5/18");
-
-		StudentTestScoreDetailsList.add(studentTestScoreDetails);
-		StudentTestScoreDetailsList.add(studentTestScoreDetails1);
-
-		StudentTestScoreDetailsList1.add(studentTestScoreDetails2);
-		StudentTestScoreDetailsList1.add(studentTestScoreDetails3);
-
-		objectList.add(testDetails);
-		objectList.add(StudentTestScoreDetailsList);
-
-		objectList1.add(testDetails1);
-		objectList1.add(StudentTestScoreDetailsList1);
+	public List<StudentTestScoreDetails> getStudentScoreDetailsByTest(RestRequestVO requestVO){
+		 
+		List<StudentTestScoreDetails> studentTestScoresList = null;
 		
-		return testNameByStudentTestDetails;
+		String studentTestScoresJSON = 
+				 
+				"[" + 
+				"{" + 
+				"\"studentName\":\"Thomas\"," + 
+				"\"studentId\":\"1\"," + 
+				"\"submitedDate\":\"3/5/18\"," +
+				"\"testScore\":\"90\"" +
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Hallie\"," + 
+				"\"studentId\":\"2\"," + 
+				"\"submitedDate\":\"3/10/18\"," +
+				"\"testScore\":\"85\"" + 
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Oliver\"," + 
+				"\"studentId\":\"3\"," + 
+				"\"submitedDate\":\"3/10/18\"," +
+				"\"testScore\":\"78\"" + 
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Hayden\"," + 
+				"\"studentId\":\"4\"," + 
+				"\"submitedDate\":\"3/11/18\"," +
+				"\"testScore\":\"60\"" + 
+				"}," + 
+				"" + 
+				"{" + 
+				"\"studentName\":\"Ava\"," + 
+				"\"studentId\":\"5\"," + 
+				"\"submitedDate\":\"3/12/18\"," +
+				"\"testScore\":\"55\"" + 
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Yasi\"," + 
+				"\"studentId\":\"6\"," + 
+				"\"submitedDate\":\"3/24/18\"," +
+				"\"testScore\":\"50\"" + 
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Edith\"," + 
+				"\"studentId\":\"7\"," + 
+				"\"submitedDate\":\"3/9/18\"," +
+				"\"testScore\":\"30\"" + 
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Darious\"," + 
+				"\"studentId\":\"8\"," + 
+				"\"submitedDate\":\"3/7/18\"," +
+				"\"testScore\":\"23\"" + 
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Emma Watson\"," + 
+				"\"studentId\":\"9\"," + 
+				"\"submitedDate\":\"3/10/18\"," +
+				"\"testScore\":\"22\"" +
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Hendrik\"," + 
+				"\"studentId\":\"10\"," + 
+				"\"submitedDate\":\"3/11/18\"," +
+				"\"testScore\":\"22\"" +
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Jollin\"," + 
+				"\"studentId\":\"11\"," + 
+				"\"submitedDate\":\"3/9/18\"," +
+				"\"testScore\":\"21\"" + 
+				"}," + 
+				"{" + 
+				"\"studentName\":\"Ritwik\"," + 
+				"\"studentId\":\"12\"," + 
+				"\"submitedDate\":\"3/11/18\"," +
+				"\"testScore\":\"20\"" + 
+				"}," + 
+				"]";
+		
+		try {
+			studentTestScoresList = OBJECT_MAPPER.readValue(studentTestScoresJSON, OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, StudentTestScoreDetails.class));
+		}catch(Exception e) {
+			BenchmarkException.printExceptionTraceToLogFile(e, logger);
+		}
+		
+		return studentTestScoresList;
 	}
-
+	
 }

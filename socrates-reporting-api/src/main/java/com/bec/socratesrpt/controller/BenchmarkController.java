@@ -28,7 +28,6 @@ package com.bec.socratesrpt.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,6 +43,7 @@ import com.bec.socratesrpt.rest.model.RestResponseVO;
 import com.bec.socratesrpt.rest.model.School;
 import com.bec.socratesrpt.rest.model.Student;
 import com.bec.socratesrpt.rest.model.StudentTestScoreDetails;
+import com.bec.socratesrpt.rest.model.TestDetails;
 import com.bec.socratesrpt.rest.model.TestScoreDetails;
 import com.bec.socratesrpt.rest.model.TestsModel;
 
@@ -67,14 +67,15 @@ public class BenchmarkController {
 	 */
 	@ApiOperation(value = "View a list of schools permitted for logged in user",response = RestResponseVO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved  school list"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+            @ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
     }
     )
-	@RequestMapping(value = "/getSchoolList/{userId}", method = RequestMethod.GET)
-	public RestResponseVO getSchoolList(@PathVariable Integer userId, @RequestParam String sessionKey, @RequestParam String role) {
+	@RequestMapping(value = "/getSchoolList", method = RequestMethod.GET)
+	public RestResponseVO getSchoolList(@RequestParam Integer userId, @RequestParam String sessionKey, @RequestParam String role) {
 		
 		long startTime = logger.logPMTBegin("Get school list begin :", true);
 		RestResponseVO restResponseVO = new RestResponseVO();
@@ -86,12 +87,12 @@ public class BenchmarkController {
 			} else {
 				restResponseVO.setStatusDescription("Required school list not available....!");
 			}
-			restResponseVO.setStatusCode(200);//status code have move to constants
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
 			restResponseVO.setSessionKey(sessionKey);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		}catch (Exception e) {
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
-			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		logger.logPMTEnd("Get school list end :", startTime, true);
@@ -105,10 +106,11 @@ public class BenchmarkController {
 	 */
 	@ApiOperation(value = "View a list of classes permitted for selected school",response = RestResponseVO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved  class list"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
     }
     )
 	@RequestMapping(value = "/getClassList", method = RequestMethod.GET)
@@ -126,11 +128,11 @@ public class BenchmarkController {
 				restResponseVO.setStatusDescription("Required class list not available...!");
 			}
 			restResponseVO.setSessionKey(sessionKey);
-			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		}catch (Exception e) {
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
-			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		logger.logPMTEnd("Get class list end :", startTime, true);
@@ -145,10 +147,11 @@ public class BenchmarkController {
 	 */
 	@ApiOperation(value = "View a list of students for the school selected",response = RestResponseVO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved  students list"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
     }
     )
 	@RequestMapping(value = "/getStudentList", method = RequestMethod.GET)
@@ -166,11 +169,11 @@ public class BenchmarkController {
 				restResponseVO.setStatusDescription("Required student list not available...!");
 			}
 			restResponseVO.setSessionKey(sessionKey);
-			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		}catch (Exception e) {
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
-			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		logger.logPMTEnd("Get student list end :", startTime, true);
@@ -180,10 +183,11 @@ public class BenchmarkController {
 	
 	@ApiOperation(value = "gets test score for a student",response = RestResponseVO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved  test score"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
     }
     )
 	@RequestMapping(value = "/getTestScoreByStudent", method = RequestMethod.POST)
@@ -197,11 +201,11 @@ public class BenchmarkController {
 			} else {
 				restResponseVO.setStatusDescription("Required test score details not available...!");
 			}
-			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		} catch (Exception e) {
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
-			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		return restResponseVO;
@@ -210,10 +214,11 @@ public class BenchmarkController {
 	
 	@ApiOperation(value = "gets test score for a class average",response = RestResponseVO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved  test score for a class"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
     }
     )
 	@RequestMapping(value = "/getTestScoreByClass", method = RequestMethod.POST)
@@ -227,11 +232,11 @@ public class BenchmarkController {
 			} else {
 				restResponseVO.setStatusDescription("Required testscore details not available...!");
 			}
-			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		} catch (Exception e) {
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
-			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		return restResponseVO;
@@ -239,10 +244,11 @@ public class BenchmarkController {
 	
 	@ApiOperation(value = "gets test score for a school average",response = RestResponseVO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved  test score for a school"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
     }
     )
 	@RequestMapping(value = "/getTestScoreBySchool", method = RequestMethod.POST)
@@ -256,11 +262,11 @@ public class BenchmarkController {
 			} else {
 				restResponseVO.setStatusDescription("Required testscore details not available...!");
 			}
-			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		} catch (Exception e) {
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
-			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		return restResponseVO;
@@ -268,10 +274,11 @@ public class BenchmarkController {
 	
 	@ApiOperation(value = "gets test score for a district average",response = RestResponseVO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved  test score for a district"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
     }
     )
 	@RequestMapping(value = "/getTestScoreByDistrict", method = RequestMethod.POST)
@@ -285,11 +292,11 @@ public class BenchmarkController {
 			} else {
 				restResponseVO.setStatusDescription("Required testscore details not available...!");
 			}
-			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		} catch (Exception e) {
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
-			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		return restResponseVO;
@@ -298,15 +305,15 @@ public class BenchmarkController {
 	
 	@ApiOperation(value = "fetch tests list for context is for a single class or student, the total number of tests listed will only be the universe of tests for which test data is available in the District Term selected.",response = RestResponseVO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved  test score"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
     }
     )
 	@RequestMapping(value = "/getTestsForUniverse", method = RequestMethod.GET)
 	public RestResponseVO getTestsList(@RequestBody RestRequestVO requestObject) {
-		
 
 		long startTime = logger.logPMTBegin("Get test list begin :", true);
 
@@ -319,14 +326,74 @@ public class BenchmarkController {
 			} else {
 				restResponseVO.setStatusDescription("Required test list not available...!");
 			}
-			restResponseVO.setStatusCode(200);
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
 		}catch (Exception e) {
 			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
-			restResponseVO.setStatusCode(400);
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
 		logger.logPMTEnd("Get test list end :", startTime, true);
+		return restResponseVO;
+	}
+	
+	@ApiOperation(value = "get over time test scores",response = RestResponseVO.class)
+    @ApiResponses(value = {
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
+    }
+    )
+	@RequestMapping(value = "/getOverTimeTestScores", method = RequestMethod.POST)
+	public RestResponseVO getOverTimeTestScores(@RequestBody RestRequestVO requestVO) throws Exception {
+		
+		RestResponseVO restResponseVO = new RestResponseVO();
+		try {
+			List<TestDetails> overTimeTestScoresList = studentService.getOverTimeTestScores(requestVO);
+			if (overTimeTestScoresList.size() > Constants.ZERO) {
+				restResponseVO.setValue(overTimeTestScoresList);
+			} else {
+				restResponseVO.setStatusDescription("Required testscore details not available...!");
+			}
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
+		} catch (Exception e) {
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
+			restResponseVO.setStatusDescription(e.getMessage());
+		}
+		return restResponseVO;
+	}
+	
+	@ApiOperation(value = "get student scores by test",response = RestResponseVO.class)
+    @ApiResponses(value = {
+    		@ApiResponse(code = Constants.API_SUCCESS_HTTP_RESPONSE_CODE, message = Constants.SUCCESSFULLY_RETRIEVED),
+            @ApiResponse(code = Constants.BAD_CREDEENTIALS_HTTP_REDPONSE_CODE, message = Constants.NOT_AUTHORIZED_VIEW_RESOURCE),
+            @ApiResponse(code = Constants.PERMISSION_DENIED_HTTP_REDPONSE_CODE, message = Constants.ACCESSING_FORBIDDEN),
+            @ApiResponse(code = Constants.RESOURCE_NOT_FOUND_HTTP_REDPONSE_CODE, message = Constants.RESOURCE_NOT_FOUND),
+            @ApiResponse(code = Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE, message = Constants.INTERNAL_SERVER_ERROR)
+    }
+    )
+	@RequestMapping(value = "/getStudentScoreDetailsByTest", method = RequestMethod.POST)
+	public RestResponseVO getStudentScoreDetailsByTest(@RequestBody RestRequestVO requestVO) throws Exception {
+		
+		RestResponseVO restResponseVO = new RestResponseVO();
+		try {
+			List<StudentTestScoreDetails> overTimeTestScoresList = studentService.getStudentScoreDetailsByTest(requestVO);
+			if (overTimeTestScoresList.size() > Constants.ZERO) {
+				restResponseVO.setValue(overTimeTestScoresList);
+			} else {
+				restResponseVO.setStatusDescription("Required testscore details not available...!");
+			}
+			restResponseVO.setStatusCode(Constants.API_SUCCESS_HTTP_RESPONSE_CODE);
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.SUCCESS.name());
+		} catch (Exception e) {
+			restResponseVO.setStatus(Constants.REST_RESPONSE_STATUS.FAILED.name());
+			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
+			restResponseVO.setStatusDescription(e.getMessage());
+		}
 		return restResponseVO;
 	}
 }

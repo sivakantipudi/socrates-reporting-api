@@ -25,6 +25,8 @@
  */
 package com.bec.socratesrpt.rest.model;
 
+import java.util.Arrays;
+
 public class RestRequestVO {
 
 	private String studentId;
@@ -34,6 +36,8 @@ public class RestRequestVO {
 	private String jwtToken;
 	private String userId;
 	private String districtTerm;
+	private Object[] testsArray;
+	private String testId;
 	
 	
 	/**
@@ -120,7 +124,39 @@ public class RestRequestVO {
 	public void setDistrictTerm(String districtTerm) {
 		this.districtTerm = districtTerm;
 	}
+	/**
+	 * @return the testsArray
+	 */
+	public Object[] getTestsArray() {
+		return testsArray;
+	}
+	/**
+	 * @param testsArray the testsArray to set
+	 */
+	public void setTestsArray(Object[] testsArray) {
+		this.testsArray = testsArray;
+	}
 	
+	/**
+	 * @return the testId
+	 */
+	public String getTestId() {
+		return testId;
+	}
+	/**
+	 * @param testId the testId to set
+	 */
+	public void setTestId(String testId) {
+		this.testId = testId;
+	}
 	
-	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "RestRequestVO [studentId=" + studentId + ", classId=" + classId + ", schoolId=" + schoolId
+				+ ", districtId=" + districtId + ", jwtToken=" + jwtToken + ", userId=" + userId + ", districtTerm="
+				+ districtTerm + ", testsArray=" + Arrays.toString(testsArray) + ", testId=" + testId + "]";
+	}
 }

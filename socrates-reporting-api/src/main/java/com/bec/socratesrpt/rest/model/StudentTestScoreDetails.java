@@ -28,6 +28,7 @@ package com.bec.socratesrpt.rest.model;
 public class StudentTestScoreDetails {
 
 	private String studentName;
+	private String studentId;
 	private String submitedDate;
 	private String testScore;
 	
@@ -81,5 +82,17 @@ public class StudentTestScoreDetails {
 	 */
 	public void setTestName(String testName) {
 		this.testName = testName;
+	}
+	/**
+	 * @return the studentId
+	 */
+	public String getStudentId() {
+		return studentId;
+	}
+	/**
+	 * @param studentId the studentId to set
+	 */
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 }
