@@ -54,4 +54,12 @@ public class TestDetails {
 	public void setTotalTestScore(String totalTestScore) {
 		this.testScore = totalTestScore;
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "TestDetails [testName=" + testName + ", testScore=" + testScore + "]";
+	}
 }

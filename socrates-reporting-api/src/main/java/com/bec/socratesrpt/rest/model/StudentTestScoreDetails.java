@@ -95,4 +95,13 @@ public class StudentTestScoreDetails {
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StudentTestScoreDetails [studentName=" + studentName + ", studentId=" + studentId + ", submitedDate="
+				+ submitedDate + ", testScore=" + testScore + ", testName=" + testName + "]";
+	}
 }

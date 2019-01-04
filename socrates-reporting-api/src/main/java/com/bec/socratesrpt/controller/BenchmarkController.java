@@ -193,6 +193,8 @@ public class BenchmarkController {
 	@RequestMapping(value = "/getTestScoreByStudent", method = RequestMethod.POST)
 	public RestResponseVO getTestScoreByStudent(@RequestBody RestRequestVO requestVO) throws Exception {
 		
+		long startTime = logger.logPMTBegin("Get test scores by student begin :", true);
+		
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
 			List<StudentTestScoreDetails> studentTestScoreList = studentService.getTestScoreByStudent(requestVO);
@@ -208,6 +210,7 @@ public class BenchmarkController {
 			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
+		logger.logPMTEnd("Get test scores by student end :", startTime, true);
 		return restResponseVO;
 	}
 	
@@ -224,6 +227,7 @@ public class BenchmarkController {
 	@RequestMapping(value = "/getTestScoreByClass", method = RequestMethod.POST)
 	public RestResponseVO getTestScoreByClass(@RequestBody RestRequestVO requestVO) throws Exception {
 		
+		long startTime = logger.logPMTBegin("Get test scores by class begin :", true);
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
 			List<TestScoreDetails> testScoreClassList = studentService.getTestScoreByClass(requestVO);
@@ -239,6 +243,7 @@ public class BenchmarkController {
 			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
+		logger.logPMTEnd("Get test scores by class end :", startTime, true);
 		return restResponseVO;
 	}
 	
@@ -254,6 +259,7 @@ public class BenchmarkController {
 	@RequestMapping(value = "/getTestScoreBySchool", method = RequestMethod.POST)
 	public RestResponseVO getTestScoreBySchool(@RequestBody RestRequestVO requestVO) throws Exception {
 		
+		long startTime = logger.logPMTBegin("Get test scores by school begin :", true);
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
 			List<TestScoreDetails> testScoreSchoolList = studentService.getTestScoreBySchool(requestVO);
@@ -269,6 +275,7 @@ public class BenchmarkController {
 			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
+		logger.logPMTEnd("Get test scores by school end :", startTime, true);
 		return restResponseVO;
 	}
 	
@@ -284,6 +291,7 @@ public class BenchmarkController {
 	@RequestMapping(value = "/getTestScoreByDistrict", method = RequestMethod.POST)
 	public RestResponseVO getTestScoreByDistrict(@RequestBody RestRequestVO requestVO) throws Exception {
 		
+		long startTime = logger.logPMTBegin("Get test scores by district begin :", true);
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
 			List<TestScoreDetails> testScoreDistrictList = studentService.getTestScoreByDistrict(requestVO);
@@ -299,6 +307,7 @@ public class BenchmarkController {
 			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
+		logger.logPMTEnd("Get test scores by district end :", startTime, true);
 		return restResponseVO;
 	}
 
@@ -316,7 +325,6 @@ public class BenchmarkController {
 	public RestResponseVO getTestsList(@RequestBody RestRequestVO requestObject) {
 
 		long startTime = logger.logPMTBegin("Get test list begin :", true);
-
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
 			List<TestsModel> testsList = studentService.getTestsForUniverse(requestObject);
@@ -349,6 +357,7 @@ public class BenchmarkController {
 	@RequestMapping(value = "/getOverTimeTestScores", method = RequestMethod.POST)
 	public RestResponseVO getOverTimeTestScores(@RequestBody RestRequestVO requestVO) throws Exception {
 		
+		long startTime = logger.logPMTBegin("Get over time test scores begin :", true);
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
 			List<TestDetails> overTimeTestScoresList = studentService.getOverTimeTestScores(requestVO);
@@ -364,6 +373,7 @@ public class BenchmarkController {
 			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
+		logger.logPMTEnd("Get over time test scores end :", startTime, true);
 		return restResponseVO;
 	}
 	
@@ -379,6 +389,7 @@ public class BenchmarkController {
 	@RequestMapping(value = "/getStudentScoreDetailsByTest", method = RequestMethod.POST)
 	public RestResponseVO getStudentScoreDetailsByTest(@RequestBody RestRequestVO requestVO) throws Exception {
 		
+		long startTime = logger.logPMTBegin("Get student scores details by test begin :", true);
 		RestResponseVO restResponseVO = new RestResponseVO();
 		try {
 			List<StudentTestScoreDetails> overTimeTestScoresList = studentService.getStudentScoreDetailsByTest(requestVO);
@@ -394,6 +405,7 @@ public class BenchmarkController {
 			restResponseVO.setStatusCode(Constants.SERVER_FAILURE_HTTP_RESPONSE_CODE);
 			restResponseVO.setStatusDescription(e.getMessage());
 		}
+		logger.logPMTEnd("Get student scores details by test end :", startTime, true);
 		return restResponseVO;
 	}
 }

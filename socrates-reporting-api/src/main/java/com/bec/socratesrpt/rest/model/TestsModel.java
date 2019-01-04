@@ -54,4 +54,13 @@ public class TestsModel{
 	public void setTestEndDate(String testEndDate) {
 		this.testEndDate = testEndDate;
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "TestsModel [testName=" + testName + ", testResults=" + testResults + ", testStartDate=" + testStartDate
+				+ ", testEndDate=" + testEndDate + "]";
+	}
 }

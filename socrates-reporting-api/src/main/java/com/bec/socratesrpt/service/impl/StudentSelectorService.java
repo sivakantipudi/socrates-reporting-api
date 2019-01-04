@@ -107,6 +107,7 @@ public class StudentSelectorService implements IStudentSelectorService{
 	@Override
 	public List<StudentTestScoreDetails> getTestScoreByStudent(RestRequestVO requestVO){
 		
+		logger.info("get test score by student {}", requestVO.getStudentId());
 		List<StudentTestScoreDetails> studentTestScoreList = null;
 		
 		String testScoreByStudentJSON = 
@@ -204,7 +205,9 @@ public class StudentSelectorService implements IStudentSelectorService{
 	}
 	
 	@Override
-	public List<TestsModel> getTestsForUniverse(RestRequestVO requestObj) {
+	public List<TestsModel> getTestsForUniverse(RestRequestVO requestVO) {
+		
+		logger.info("get tests for universe {}", requestVO.getSchoolId());
 		List<TestsModel> testsList = null;
 		String testsJSON = "[{" + 
 				"\"testName\":\"Interim1\"," + 
@@ -259,6 +262,7 @@ public class StudentSelectorService implements IStudentSelectorService{
 	@Override
 	public List<TestScoreDetails> getTestScoreByClass(RestRequestVO requestVO){
 		
+		logger.info("get test score by class {}", requestVO.getClassId());
 		List<TestScoreDetails> testScoresClassList = null;
 		
 		String getTestScoreByClassJSON = "[{" + 
@@ -375,6 +379,7 @@ public class StudentSelectorService implements IStudentSelectorService{
 	@Override
 	public List<TestScoreDetails> getTestScoreBySchool(RestRequestVO requestVO){
 
+		logger.info("get test score by school {}", requestVO.getSchoolId());
 		List<TestScoreDetails> testScoresSchoolList = null;
 
 		String getTestScoreBySchoolJSON = "[{" + 
@@ -491,6 +496,7 @@ public class StudentSelectorService implements IStudentSelectorService{
 	@Override
 	public List<TestScoreDetails> getTestScoreByDistrict(RestRequestVO requestVO){
 		
+		logger.info("get test score by district {}", requestVO.getDistrictId());
 		List<TestScoreDetails> testScoresDistrictList = null;
 		
 		String getTestScoreByDistrictJSON = "[{" + 
@@ -601,7 +607,9 @@ public class StudentSelectorService implements IStudentSelectorService{
 	
 	@Override
 	public List<TestDetails> getOverTimeTestScores(RestRequestVO requestVO){
-		List<TestDetails> overTimeClassTestScoreList = new LinkedList<TestDetails>();
+		
+		logger.info("get over time test scores");
+		List<TestDetails> overTimeClassTestScoreList = null;
 
 		String overTimeClassTestScoresJSON = 
 
@@ -685,6 +693,8 @@ public class StudentSelectorService implements IStudentSelectorService{
 	@Override
 	public List<StudentTestScoreDetails> getStudentScoreDetailsByTest(RestRequestVO requestVO){
 		 
+		logger.info("get student score details by test {}", requestVO.getTestId());
+		
 		List<StudentTestScoreDetails> studentTestScoresList = null;
 		
 		String studentTestScoresJSON = 
@@ -714,7 +724,6 @@ public class StudentSelectorService implements IStudentSelectorService{
 				"\"submitedDate\":\"3/11/18\"," +
 				"\"testScore\":\"60\"" + 
 				"}," + 
-				"" + 
 				"{" + 
 				"\"studentName\":\"Ava\"," + 
 				"\"studentId\":\"5\"," + 

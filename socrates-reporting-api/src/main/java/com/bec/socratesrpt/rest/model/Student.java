@@ -67,4 +67,12 @@ public class Student {
 	public void setSchool(String school) {
 		this.school = school;
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", school=" + school + "]";
+	}
 }
